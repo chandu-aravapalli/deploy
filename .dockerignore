@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*.egg-info/
+
+# Node
+node_modules/
+.next/
+out/
+build/
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+
+# Documentation
+README.md
+*.md
+
+# Config files not needed in container
+next.config.js
+tailwind.config.ts
+tsconfig.json
+package.json
+package-lock.json
+postcss.config.js
+vercel.json
+setup.sh
+
+# Frontend files
+app/
+
