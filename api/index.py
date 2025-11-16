@@ -21,6 +21,24 @@ app.add_middleware(
 class NewFeedback(BaseModel):
     text: str
 
+@app.get("/")
+def root():
+    """Root endpoint - API is running"""
+    return {
+        "message": "Tiny Feedback Board API",
+        "status": "running",
+        "endpoints": {
+            "GET /api/feedback": "List all feedback",
+            "POST /api/feedback": "Create new feedback",
+            "POST /api/feedback/{id}/upvote": "Upvote feedback"
+        }
+    }
+
+@app.get("/health")
+def health_check():
+    """Health check endpoint"""
+    return {"status": "healthy", "feedback_count": len(FEEDBACK)}
+
 @app.get("/api/feedback")
 def list_feedback() -> List[dict]:
     # newest first, then by votes
