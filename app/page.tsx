@@ -4,12 +4,15 @@ import { useEffect, useState } from "react";
 
 type Item = { id: number; text: string; votes: number; created_at: number };
 
+// Get backend URL from environment variable or use default
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+
 export default function Page() {
   const [items, setItems] = useState<Item[]>([]);
   const [text, setText] = useState("");
 
   async function load() {
-    const res = await fetch("/api/feedback", { cache: "no-store" });
+    const res = await fetch(`${API_URL}/api/feedback`, { cache: "no-store" });
     setItems(await res.json());
   }
 
@@ -18,7 +21,7 @@ export default function Page() {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!text.trim()) return;
-    await fetch("/api/feedback", {
+    await fetch(`${API_URL}/api/feedback`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text }),
@@ -27,7 +30,7 @@ export default function Page() {
   }
 
   async function upvote(id: number) {
-    await fetch(`/api/feedback/${id}/upvote`, { method: "POST" });
+    await fetch(`${API_URL}/api/feedback/${id}/upvote`, { method: "POST" });
     load();
   }
 

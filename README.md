@@ -5,11 +5,8 @@ A simple feedback board application where users can submit short feedback messag
 ## Tech Stack
 
 - **Frontend**: Next.js 15 (App Router) with TypeScript and Tailwind CSS
-- **Backend**: FastAPI (Python)
-- **Storage**: In-memory (easily switchable to Vercel Postgres/Neon or RDS)
-- **Deployment Options**:
-  - Option 1: Backend on AWS App Runner + Frontend on Vercel
-  - Option 2: Full stack on Vercel (serverless functions)
+- **Backend**: FastAPI (Python) running as Vercel serverless functions
+- **Storage**: In-memory (easily switchable to Vercel Postgres/Neon)
 
 ## Project Structure
 
@@ -81,31 +78,7 @@ uvicorn index:app --reload --port 8000
 
 Navigate to [http://localhost:3000](http://localhost:3000)
 
-## Deployment Options
-
-### Option 1: AWS App Runner (Recommended for Production)
-
-Deploy FastAPI backend to AWS App Runner with ECR for better scalability and control.
-
-**Quick Start:**
-```bash
-# Make scripts executable
-chmod +x deploy-aws.sh create-apprunner-service.sh
-
-# Deploy to AWS
-./deploy-aws.sh
-./create-apprunner-service.sh
-```
-
-📖 **[Full AWS Deployment Guide](AWS_DEPLOYMENT.md)**
-
-After deployment, update your frontend environment variable:
-```bash
-# In Vercel dashboard or .env.local
-NEXT_PUBLIC_API_URL=https://your-app-runner-url.awsapprunner.com
-```
-
-### Option 2: Full Vercel Deployment
+## Deployment to Vercel
 
 1. **Install Vercel CLI (optional):**
 
@@ -149,40 +122,12 @@ conn = psycopg2.connect(DATABASE_URL)
 
 ## Environment Variables
 
-### For AWS Deployment
-
-Copy `env.example` to `.env.local`:
-
-```bash
-# Frontend (Next.js)
-NEXT_PUBLIC_API_URL=https://your-app-runner-url.awsapprunner.com
-
-# AWS CLI (for deployment scripts)
-AWS_REGION=us-east-1
-ECR_REPO_NAME=tiny-feedback-backend
-```
-
-### For Vercel-Only Deployment
-
 No environment variables needed for the in-memory version!
 
 For Postgres, Vercel automatically provides:
 - `POSTGRES_URL`
 - `POSTGRES_PRISMA_URL`
 - `POSTGRES_URL_NON_POOLING`
-
-## Docker Support
-
-Test locally with Docker:
-
-```bash
-# Build and run
-docker build -t tiny-feedback-backend .
-docker run -p 8000:8000 tiny-feedback-backend
-
-# Or use docker-compose
-docker-compose up
-```
 
 ## Contributing
 
